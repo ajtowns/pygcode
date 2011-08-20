@@ -2,9 +2,8 @@
 # Copyright 2008 by Bdale Garbee <bdale@gag.com>.  GPLv2
 # Copyright 2011 by Anthony Towns <aj@erisian.com.au>. GPLv2
 
-# This is a Python library to emit g-code for a MaxNC-10 milling machine 
-# with upgraded "trim router" spindle to cut motor mount centering rings
-# or bulkheads for a model rocket.
+# This is a Python library to emit g-code to cut motor mount centering
+# rings or bulkheads for a model rocket.
 #
 # Z reference plane is top surface of stock, X/Y origin is center of ring
 
