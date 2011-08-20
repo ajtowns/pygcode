@@ -76,7 +76,7 @@ gcode.circle(RingOD + CutterOD)
 gcode.close()
 
 ### EBAY BULKHEAD 
-gcode = Gcode(output=open("choctop_cr_ebay.g","w"), speed=Speed, free=Zfree)
+gcode = Gcode(output=open("choctop_bh_ebay.g","w"), speed=Speed, free=Zfree)
 
 gcode.Zdepth = Zdepth
 
