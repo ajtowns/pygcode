@@ -13,7 +13,7 @@ CouplerDepth = 0.3500
 
 FinCount = 3            # 3 fins
 FinWidth = 0.1870       # fin thickness
-FinDepth = 0.3500       # this ring is just under 3/4" thick
+FinDepth = 0.1250       # depth of guide for fin
 
 ClusterCount = 3        # cluster of 3 secondary motors
 ClusterOD = 1.220       # outside diam of LOC 29mm mmt
@@ -21,7 +21,9 @@ ClusterRotation = 115   # degrees rotation
 ClusterSeparation = 2.6 # separaration factor
 
 Zfree = 0.1000          # height in Z to clear all obstructions
-Zdepth = 1.000          # depth of plunge (stock plus into tool sweet spot)
+Zthrough = 1.000        # depth to cut all the way through
+                        # (incl tool sweet spot)
+
 Speed = 16              # cutting speed
 
 ### AFT CR
@@ -30,7 +32,7 @@ gcode = Gcode(output=open("choctop_cr_aft.g","w"), speed=Speed, free=Zfree)
 gcode.Zdepth = FinDepth
 gcode.fin_slots(FinCount, RingID, RingOD, FinWidth)
 
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 gcode.comment("MMT hole")
 gcode.circle(RingID - CutterOD)
 
@@ -47,7 +49,7 @@ gcode = Gcode(output=open("choctop_cr_mid.g","w"), speed=Speed, free=Zfree)
 gcode.Zdepth = FinDepth
 gcode.fin_slots(FinCount, RingID, RingOD, FinWidth)
 
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 gcode.comment("MMT hole")
 gcode.circle(RingID - CutterOD)
 
@@ -61,7 +63,7 @@ gcode.close()
 ### FORWARD CR
 gcode = Gcode(output=open("choctop_cr_fwd.g","w"), speed=Speed, free=Zfree)
 
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 gcode.comment("MMT hole")
 gcode.circle(RingID - CutterOD)
 
@@ -70,7 +72,7 @@ gcode.Zdepth = CouplerDepth
 gcode.circle(CouplerID + CutterOD)
 
 gcode.comment("ring outer diameter")
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 gcode.circle(RingOD + CutterOD)
 
 gcode.close()
@@ -78,14 +80,14 @@ gcode.close()
 ### EBAY BULKHEAD 
 gcode = Gcode(output=open("choctop_bh_ebay.g","w"), speed=Speed, free=Zfree)
 
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 
 gcode.comment("coupler outer diameter")
 gcode.Zdepth = CouplerDepth
 gcode.circle(CouplerID + CutterOD)
 
 gcode.comment("ring outer diameter")
-gcode.Zdepth = Zdepth
+gcode.Zdepth = Zthrough
 gcode.circle(RingOD + CutterOD)
 
 gcode.close()
