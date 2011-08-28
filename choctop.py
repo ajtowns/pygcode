@@ -12,7 +12,7 @@ CouplerID = 5.202
 CouplerDepth = 0.3500
 
 FinCount = 3            # 3 fins
-FinWidth = 0.1870       # fin thickness
+FinWidth = 0.2500       # fin thickness
 FinDepth = 0.1250       # depth of guide for fin
 
 ClusterCount = 3        # cluster of 3 secondary motors
