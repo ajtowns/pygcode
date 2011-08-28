@@ -45,7 +45,7 @@ class Gcode(object):
 
     def plunge(self):
         self.write("(plunge)")
-        self.write("G01 Z %.2f F%d" % (-self.Zdepth, self.Speed))
+        self.write("G01 Z %.2f F%d" % (-self.Zdepth, int(self.Speed/2)))
         
     def retract(self):
         self.write("(retract)")
