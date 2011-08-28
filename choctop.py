@@ -27,7 +27,7 @@ Zthrough = 1.000        # depth to cut all the way through
 Speed = 16              # cutting speed
 
 ### AFT CR
-gcode = Gcode(output=open("choctop_cr_aft.g","w"), speed=Speed, free=Zfree)
+gcode = Gcode(output=open("choctop_cr_aft.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
 gcode.Zdepth = FinDepth
 gcode.fin_slots(FinCount, RingID, RingOD, FinWidth)
@@ -43,11 +43,16 @@ gcode.circle(RingOD + CutterOD)
 
 gcode.close()
 
-### MID CR
-gcode = Gcode(output=open("choctop_cr_mid.g","w"), speed=Speed, free=Zfree)
+### MID CR (lower side)
+gcode = Gcode(output=open("choctop_cr_mid_lo.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
 gcode.Zdepth = FinDepth
 gcode.fin_slots(FinCount, RingID, RingOD, FinWidth)
+
+gcode.close()
+
+### MID CR (upper side)
+gcode = Gcode(output=open("choctop_cr_mid_up.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
 gcode.Zdepth = Zthrough
 gcode.comment("MMT hole")
@@ -61,7 +66,7 @@ gcode.circle(RingOD + CutterOD)
 gcode.close()
 
 ### FORWARD CR
-gcode = Gcode(output=open("choctop_cr_fwd.g","w"), speed=Speed, free=Zfree)
+gcode = Gcode(output=open("choctop_cr_fwd.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
 gcode.Zdepth = Zthrough
 gcode.comment("MMT hole")
@@ -77,10 +82,17 @@ gcode.circle(RingOD + CutterOD)
 
 gcode.close()
 
-### EBAY BULKHEAD 
-gcode = Gcode(output=open("choctop_bh_ebay.g","w"), speed=Speed, free=Zfree)
+### FORWARD CR UPPER SIDE DSUB
+gcode = Gcode(output=open("choctop_cr_fwd_dsub.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
+gcode.comment("9 pin dsub")
 gcode.Zdepth = Zthrough
+gcode.dsub(-5.5/4, 0, 0)
+
+gcode.close()
+
+### EBAY BULKHEAD 
+gcode = Gcode(output=open("choctop_bh_ebay.g","w"), speed=Speed, free=Zfree, cutter=CutterOD)
 
 gcode.comment("coupler outer diameter")
 gcode.Zdepth = CouplerDepth

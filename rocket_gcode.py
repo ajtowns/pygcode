@@ -21,11 +21,11 @@ def polar2xy(radius, degrees = None, radians = None):
     return x,y
 
 class Gcode(object):
-    def __init__(self, output = sys.stdout, 
-                 free = 0.1, depth = 1.0, cutter = 0.125, 
-                 speed = 8):
+    def __init__(self,
+                 free, cutter, speed = 8,
+                 output = sys.stdout):
         self.Zfree = free
-        self.Zdepth = depth
+        self.Zdepth = 0.0
         self.Speed = speed
         self.CutterOD = cutter
         self.output = output
@@ -47,7 +47,7 @@ class Gcode(object):
         self.write("(plunge)")
         self.write("G01 Z %.2f F%d" % (-self.Zdepth, self.Speed))
         
-    def retract(self, depth=None, speed=None):
+    def retract(self):
         self.write("(retract)")
         self.write("G01 Z %.2f F%d" % (self.Zfree, self.Speed))
 
@@ -128,4 +128,23 @@ class Gcode(object):
 
             ClusX, ClusY = polar2xy(base_dist * sep, degrees=degrees)
             self.circle(diam - self.CutterOD, x=ClusX, y=ClusY)
+
+    def dsub(self, x, y, rotation = 0):
+        # 9pin dsub female
+        # 1mm deep frame, 30mm long by 12mm wide
+
+        old_depth = self.Zdepth
+        self.Zdepth = mm2inch(1)
+        dX, dY = polar2xy(mm2inch(15), degrees = rotation)
+        self.slot(x-dX, y-dY, x+dX, y+dY, mm2inch(12))
+
+        #    need approx 1cm of depth for connector + room for wires
+        #    so that's basically all the way through...
+        #    connector is barely 1mm (maybe 0.5mm?) on sides
+        #    connector is 6mm from either edge on longer side
+        #    connector is 8mm from either edge on shorter side
+
+        self.Zdepth = old_depth
+        dX, dY = polar2xy(mm2inch(9), degrees = rotation)
+        self.slot(x-dX, y-dY, x+dX, y+dY, mm2inch(10))
 
